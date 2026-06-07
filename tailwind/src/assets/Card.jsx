@@ -1,10 +1,8 @@
-import { RxBookmarkFilled } from "react-icons/rx";
 import Dilog from "../components/ui/Dilog";
-import { Drawer } from "@/components/ui/drawer";
-
+import { InputForm } from "./Shadcnform";
 const Card = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-8">
       {/* Header */}
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -17,21 +15,21 @@ const Card = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="flex justify-center space-x-4 mb-12">
+      <nav className={window.outerWidth <= 320 ? "grid grid-cols-2 gap-3.5" : "flex justify-center space-x-4 mb-12"}>
         <a
-          href="/dashboard"
+          href="https://youtu.be/BouH1UmDabE?si=NNBdowd98W9scIYj"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
-          Home
+          DSA
         </a>
         <a
-          href="/team"
+          href="https://youtu.be/M9O5AjEFzKw?si=jERgTQAwjPCadb9F"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
-          Team
+          dev
         </a>
         <a
-          href="/projects"
+          href="http://localhost:5173/dashboard"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
           Projects
@@ -48,7 +46,7 @@ const Card = () => {
       <div className="max-w-6xl mx-auto">
         {/* Hero Section */}
         <div className="bg-white rounded-lg shadow-lg p-12 mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-[1.8rem] font-bold text-gray-900 mb-4">
             🎉 Setup Complete!
           </h2>
           <p className="text-gray-600 mb-6">
@@ -79,7 +77,6 @@ const Card = () => {
             <p className="text-gray-600 mb-6">
               Test the shadcn/ui Drawer component:
             </p>
-            <Drawer />
           </div>
         </div>
 
@@ -109,7 +106,13 @@ const Card = () => {
             </div>
           </div>
         </div>
-
+        <div>
+        </div>
+        <div>
+        </div>
+        <div className="bg-white rounded-lg shadow-lg p-12 mb-12 max-w-2xl mx-auto">
+        <InputForm/>
+        </div>
         {/* Footer */}
         <footer className="bg-gray-900 text-white rounded-lg p-8 text-center">
           <p className="mb-2">&copy; 2024 Your Tailwind React App</p>
