@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useState,useReducer } from "react"
+import { useState } from "react"
 import {
   Field,
   FieldDescription,
@@ -25,7 +25,7 @@ export function InputForm() {
   });
         
   const handleinputdata = (data, attribute) => {
-    setForm((prev)=>{return {...prev,}});
+    setForm((prev)=>{return {...prev,[attribute]:data}});
   }
   console.log(form);
   return (
