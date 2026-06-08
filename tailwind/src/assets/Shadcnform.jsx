@@ -1,19 +1,19 @@
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export function InputForm() {
   const [form, setForm] = useState({
@@ -23,10 +23,12 @@ export function InputForm() {
     country: "",
     address: "",
   });
-        
+
   const handleinputdata = (data, attribute) => {
-    setForm((prev)=>{return {...prev,[attribute]:data}});
-  }
+    setForm((prev) => {
+      return { ...prev, [attribute]: data };
+    });
+  };
   console.log(form);
   return (
     <form className="w-full max-w-sm">
@@ -34,34 +36,49 @@ export function InputForm() {
         <Field>
           <FieldLabel htmlFor="form-name">Name</FieldLabel>
           <Input
-              handleinputdata={handleinputdata}
+            handleinputdata={handleinputdata}
+            label={"name"}
             id="form-name"
             type="text"
             placeholder="Evil Rabbit"
             required
-           
           />
         </Field>
         <Field>
           <FieldLabel htmlFor="form-email">Email</FieldLabel>
-          <Input 
-            id="form-email" 
-            type="email" 
-            placeholder="john@example.com" 
-              handleinputdata={handleinputdata}
+          <Input
+            handleinputdata={handleinputdata}
+            label={"email"}
+            id="form-email"
+            type="email"
+            placeholder="john@example.com"
+            handleinputdata={handleinputdata}
           />
           <FieldDescription>
             We&apos;ll never share your email with anyone.
           </FieldDescription>
         </Field>
-        <div className="grid grid-cols-2 gap-4">
+        <div className={"grid grid-cols-1 sm:grid-cols-2 gap-4"}>
           <Field>
             <FieldLabel htmlFor="form-phone">Phone</FieldLabel>
-            <Input id="form-phone" type="tel" placeholder="+91 (555) 123-4567" />
+            <Input
+              handleinputdata={handleinputdata}
+              label={"tel"}
+              id="form-phone"
+              type="tel"
+              placeholder="+91 (555) 123-4567"
+            />
           </Field>
           <Field>
             <FieldLabel htmlFor="form-country">Country</FieldLabel>
-            <Select defaultValue="us">
+            <Select
+              defaultValue="us"
+              onValueChange={(value) => {
+                setForm((prev) => {
+                  return { ...prev,country:value };
+                });
+              }}
+            >
               <SelectTrigger id="form-country">
                 <SelectValue />
               </SelectTrigger>
@@ -75,7 +92,13 @@ export function InputForm() {
         </div>
         <Field>
           <FieldLabel htmlFor="form-address">Address</FieldLabel>
-          <Input id="form-address" type="text" placeholder="123 Main St" />
+          <Input
+            handleinputdata={handleinputdata}
+            label={"address"}
+            id="form-address"
+            type="text"
+            placeholder="123 Main St"
+          />
         </Field>
         <Field orientation="horizontal">
           <Button type="button" variant="outline">
@@ -85,5 +108,5 @@ export function InputForm() {
         </Field>
       </FieldGroup>
     </form>
-  )
+  );
 }
