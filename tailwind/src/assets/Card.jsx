@@ -1,5 +1,8 @@
 import Dilog from "../components/ui/Dilog";
 import { InputForm } from "./Shadcnform";
+import { PremiumCard } from "./FramerMotion"
+import { FormValidation } from "./FormValidation"
+
 const Card = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-8">
@@ -112,6 +115,12 @@ const Card = () => {
         </div>
         <div className="bg-white rounded-lg shadow-lg p-12 mb-12 max-w-2xl mx-auto">
         <InputForm/>
+        </div>
+        <div>
+          <PremiumCard/>
+        </div>
+        <div className="bg-white rounded-lg shadow-lg p-12 mb-12 max-w-2xl mx-auto mt-4">
+          <FormValidation/>
         </div>
         {/* Footer */}
         <footer className="bg-gray-900 text-white rounded-lg p-8 text-center">

@@ -13,29 +13,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 export function FormValidation() {
-    const [userData, setUserData] =useState({name:"",email:"",tel:"",country:"",address:""}); 
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    tel: "",
+    country: "",
+    address: "",
+  });
   const {
     register,
-    handleSubmit,reset,
+    handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
   const mySubmit = (data) => {
-    console.log(data);
     setUserData((prev) => {
-  return {
-    ...prev,
-    ...data,
+      return {
+        ...prev,
+        ...data,
       };
-   
-});
-    reset();  
+    });
+    reset();
   };
   useEffect(() => {
-  console.log(userData);
-}, [userData]);
+    console.log(userData);
+  }, [userData]);
 
   return (
     <form className="w-full max-w-sm" onSubmit={handleSubmit(mySubmit)}>
@@ -86,7 +91,8 @@ export function FormValidation() {
                 message: "Email cannot exceed 20 characters",
               },
               pattern: {
-                value:  /^(?!.*\.\.)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                value:
+                  /^(?!.*\.\.)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                 message: "Please enter a valid email address",
               },
             })}
@@ -127,7 +133,9 @@ export function FormValidation() {
           <Button type="button" variant="outline">
             Cancel
           </Button>
-                  <Button type="submit" disabled={isSubmitting}>{isSubmitting?"Loading...":"Submit"}</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Loading..." : "Submit"}
+          </Button>
         </Field>
       </FieldGroup>
     </form>

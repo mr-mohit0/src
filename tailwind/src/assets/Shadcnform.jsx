@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import {} from "react-hook-form";
 import {
   Field,
   FieldDescription,
@@ -29,7 +30,7 @@ export function InputForm() {
       return { ...prev, [attribute]: data };
     });
   };
-  console.log(form);
+  // console.log(form);
   return (
     <form className="w-full max-w-sm">
       <FieldGroup>
@@ -75,7 +76,7 @@ export function InputForm() {
               defaultValue="us"
               onValueChange={(value) => {
                 setForm((prev) => {
-                  return { ...prev,country:value };
+                  return { ...prev, country: value };
                 });
               }}
             >
