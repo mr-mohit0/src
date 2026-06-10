@@ -1,11 +1,37 @@
 import Dilog from "../components/ui/Dilog";
 import { InputForm } from "./Shadcnform";
-import { PremiumCard } from "./FramerMotion"
-import { FormValidation } from "./FormValidation"
-
+import { PremiumCard } from "./FramerMotion";
+import { FormValidation } from "./FormValidation";
+import React_19_Features from "./React_19_Features";
+import { Suspense, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 const Card = () => {
+  const [them, setThem] = useState(true);
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-8">
+    <div
+      className={
+        them
+          ? "min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-8"
+          : "min-h-screen bg-gradient-to-b from-gray-900 via-zinc-600 to-black text-white p-8"
+      }
+    >
+      <span>
+        {them ? (
+          <Sun
+            className="size-10"
+            onClick={() => {
+              setThem(false);
+            }}
+          ></Sun>
+        ) : (
+          <Moon
+            className="size-10"
+            onClick={() => {
+              setThem(true);
+            }}
+          ></Moon>
+        )}
+      </span>
       {/* Header */}
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -18,7 +44,13 @@ const Card = () => {
       </div>
 
       {/* Navigation */}
-      <nav className={window.outerWidth <= 320 ? "grid grid-cols-2 gap-3.5" : "flex justify-center space-x-4 mb-12"}>
+      <nav
+        className={
+          window.outerWidth <= 320
+            ? "grid grid-cols-2 gap-3.5"
+            : "flex justify-center space-x-4 mb-12"
+        }
+      >
         <a
           href="https://youtu.be/BouH1UmDabE?si=NNBdowd98W9scIYj"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
@@ -109,18 +141,16 @@ const Card = () => {
             </div>
           </div>
         </div>
-        <div>
-        </div>
-        <div>
-        </div>
+        <div></div>
+        <div></div>
         <div className="bg-white rounded-lg shadow-lg p-12 mb-12 max-w-2xl mx-auto">
-        <InputForm/>
+          <InputForm />
         </div>
         <div>
-          <PremiumCard/>
+          <PremiumCard />
         </div>
         <div className="bg-white rounded-lg shadow-lg p-12 mb-12 max-w-2xl mx-auto mt-4">
-          <FormValidation/>
+          <FormValidation />
         </div>
         {/* Footer */}
         <footer className="bg-gray-900 text-white rounded-lg p-8 text-center">
@@ -130,6 +160,9 @@ const Card = () => {
           </p>
         </footer>
       </div>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <React_19_Features />
+      </Suspense>
     </div>
   );
 };
