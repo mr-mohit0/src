@@ -2,10 +2,13 @@ import { use  } from "react";
 
 // the use hook used to fetch the dtata from server by asncronusly
 // its a repalcement of use effect hook
-const accessKey = import.meta.env.unsplace_access_key;
+
+
 const images = async () => {
+  // const accessKey = import.meta.env.unsplace_access_key;
+  // console.log(accessKey);
   try {
-    const result = await fetch(accessKey);
+    const result = await fetch("https://apiunsplash.com/photos/random?count=9&client_id=TNCKpgHvo-BbnlFS_AIsOUrOLMyLTvRKfKN4RxEvKew");
 
     if (!result.ok) {
       throw new Error(`HTTP Error: ${result.status}`);

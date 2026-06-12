@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
@@ -6,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 
-export  function PremiumCard() {
+export function PremiumCard() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -107,9 +106,7 @@ export  function PremiumCard() {
               }}
               className="mt-8"
             >
-              <Button className="w-full">
-                Get Started
-              </Button>
+              <Button className="w-full">Get Started</Button>
             </motion.div>
           </CardContent>
         </Card>
