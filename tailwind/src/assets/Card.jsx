@@ -5,8 +5,11 @@ import { FormValidation } from "./FormValidation";
 import React_19_Features from "./React_19_Features";
 import { Suspense, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { globalStorage } from "./reduxtoolkit";
 const Card = () => {
-  const [them, setThem] = useState(true);
+  const thems = globalStorage((e) => { return e.themeToggle });
+  const [them, setThem] = useState(thems);
+  const them2 = globalStorage((e)=>{return e.themToggleFunc})
   return (
     <div
       className={
@@ -21,6 +24,7 @@ const Card = () => {
             className="size-10"
             onClick={() => {
               setThem(false);
+              them2(false);
             }}
           ></Sun>
         ) : (
@@ -28,6 +32,7 @@ const Card = () => {
             className="size-10"
             onClick={() => {
               setThem(true);
+              them2(true);
             }}
           ></Moon>
         )}
