@@ -1,4 +1,4 @@
-import { globalStorage } from "./reduxtoolkit";
+import { globalStorage } from "./zustand";
 import { Minus, Plus } from "lucide-react";
 const ZustandStateCounter = () => {
   const counterdata1 = globalStorage((e) => {

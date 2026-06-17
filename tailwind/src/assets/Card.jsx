@@ -5,7 +5,7 @@ import { FormValidation } from "./FormValidation";
 import React_19_Features from "./React_19_Features";
 import { Suspense, useState } from "react";
 import { Sun, Moon } from "lucide-react";
-import { globalStorage } from "./reduxtoolkit";
+import { globalStorage } from "./zustand";
 const Card = () => {
   const thems = globalStorage((e) => { return e.themeToggle });
   const [them, setThem] = useState(thems);
