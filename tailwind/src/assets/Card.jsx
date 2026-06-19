@@ -6,16 +6,18 @@ import React_19_Features from "./React_19_Features";
 import { Suspense, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { globalStorage } from "./zustand";
+import { Link, Routes } from "react-router-dom";
 const Card = () => {
   const thems = globalStorage((e) => { return e.themeToggle });
   const [them, setThem] = useState(thems);
   const them2 = globalStorage((e)=>{return e.themToggleFunc})
-  return (
+  return (<>
+    
     <div
       className={
         them
           ? "min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 p-8"
-          : "min-h-screen bg-gradient-to-b from-gray-900 via-zinc-600 to-black text-white p-8"
+          : "min-h-screen  from-black via-zinc-950 to-black text-white p-8"
       }
     >
       <span>
@@ -58,22 +60,23 @@ const Card = () => {
       >
         <a
           href="https://youtu.be/BouH1UmDabE?si=NNBdowd98W9scIYj"
+          target="blank"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
           DSA
         </a>
         <a
-          href="https://youtu.be/M9O5AjEFzKw?si=jERgTQAwjPCadb9F"
+          href="https://youtu.be/M9O5AjEFzKw?si=jERgTQAwjPCadb9F" target="blank"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
           dev
         </a>
-        <a
-          href="http://localhost:5173/dashboard"
+        <Link
+         to ="/Projects"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
           Projects
-        </a>
+        </Link>
         <a
           href="/reports"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
@@ -165,10 +168,11 @@ const Card = () => {
           </p>
         </footer>
       </div>
-      <Suspense fallback={<h1>Loading...</h1>}>
+      {/* <Suspense fallback={<h1>Loading...</h1>}>
         <React_19_Features />
-      </Suspense>
+      </Suspense> */}
     </div>
+    </>
   );
 };
 

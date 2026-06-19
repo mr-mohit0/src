@@ -1,5 +1,6 @@
 import { Search, Moon, Sun, Menu } from "lucide-react";
 import { useState } from "react";
+import {Link,NavLink}from'react-router-dom'
 
 export default function NaveBar() {
   const [darkMode, setDarkMode] = useState(true);
@@ -11,7 +12,7 @@ export default function NaveBar() {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 font-bold text-white shadow-lg">
-            M
+          M
           </div>
 
           <div>
@@ -26,26 +27,32 @@ export default function NaveBar() {
 
         {/* Nav Links */}
         <div className="hidden items-center gap-8 md:flex">
-          <a
-            href="/"
-            className="text-zinc-300 transition hover:text-white"
+          <NavLink
+            to="/"
+            className={
+              ({isActive})=>isActive?"text-orange-400 transition   ":"text-zinc-300 transition hover:text-white"}
           >
             Home
-          </a>
+          </NavLink>
 
-          <a
-            href="/about"
-            className="text-zinc-300 transition hover:text-white"
+          <NavLink
+            to="/About"
+            className={
+              ({isActive})=>isActive?"text-orange-400 transition   ":"text-zinc-300 transition hover:text-white"}
           >
             About
-          </a>
+          </NavLink>
 
-          <a
-            href="/contact"
-            className="text-zinc-300 transition hover:text-white"
+          <NavLink
+            to="/Contact"
+            className={
+              ({isActive})=>isActive?"text-orange-400 transition   ":"text-zinc-300 transition hover:text-white"}
           >
             Contact
-          </a>
+          </NavLink>
+          <NavLink className={
+              ({isActive})=>isActive?"text-orange-400 transition   ":"text-zinc-300 transition hover:text-white"}
+          to="/Counter">Counter</NavLink>
         </div>
 
         {/* Right Side */}

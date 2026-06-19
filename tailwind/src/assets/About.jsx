@@ -1,6 +1,8 @@
 import { Users, Target, Rocket } from "lucide-react";
+import {useNavigate } from "react-router-dom";
 
 export default function About() {
+  const Navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-black text-white">
       <div className="max-w-6xl mx-auto px-6 py-20">
@@ -49,6 +51,7 @@ export default function About() {
             </p>
           </div>
         </div>
+        <button className="rounded-md border border-white/10 bg-white/5 px-7 py-2 backdrop-blur-xl mt-5 " onClick={()=>{Navigate('/Projects')}} >Projects</button>
       </div>
     </div>
   );

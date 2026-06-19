@@ -20,7 +20,7 @@ const images = async () => {
     return [];
   }
 };
-const finaldata = images();
+const finaldata =0;
 const React_19_Features = () => {
   const data = use(finaldata);
   return (
