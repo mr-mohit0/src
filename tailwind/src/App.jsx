@@ -18,7 +18,8 @@ const App = () => {
           <Route path="/About" element={ <About/>} /> 
           <Route path="/Contact" element={ <Contact/>} /> 
           <Route path="/Counter" element={ <ZustandStateCounter/>} /> 
-          <Route path="/Projects" element={ <ProjectsSection/>} /> 
+          <Route path="/Projects" element={<ProjectsSection />}/>
+            <Route />
           <Route path={`/Projects/:a`} element={ <DynamicRout_projects/>} /> 
         </Routes>
       </div>
