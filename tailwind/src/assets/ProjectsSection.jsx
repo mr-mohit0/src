@@ -1,7 +1,9 @@
 import { ExternalLink } from "lucide-react";
 import { globalStorage2 } from "./zustand";
+import { useNavigate } from "react-router-dom";
 export default function ProjectsSection() {
-  const projects = globalStorage2((state)=>{return state.projects});
+  const projects = globalStorage2((state) => { return state.projects });
+  const navigate = useNavigate();
   return (
     <section
       id="projects"
@@ -29,6 +31,7 @@ export default function ProjectsSection() {
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (
             <div
+              onClick={()=>{navigate('/projects/id')}}
               key={index}
               className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-violet-500/30"
             >
