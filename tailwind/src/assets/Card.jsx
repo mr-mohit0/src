@@ -6,7 +6,7 @@ import React_19_Features from "./React_19_Features";
 import { Suspense, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { globalStorage } from "./zustand";
-import { Link, Routes } from "react-router-dom";
+import { Link, NavLink, Routes } from "react-router-dom";
 const Card = () => {
   const thems = globalStorage((e) => { return e.themeToggle });
   const [them, setThem] = useState(thems);
@@ -77,12 +77,12 @@ const Card = () => {
         >
           Projects
         </Link>
-        <a
-          href="/reports"
+        <NavLink
+          to="/posts"
           className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-gray-100 transition"
         >
           Reports
-        </a>
+        </NavLink>
       </nav>
 
       {/* Main Content */}
