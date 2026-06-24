@@ -1,11 +1,6 @@
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 const Card = ({ post }) => {
   return (
     <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-all duration-300">
@@ -27,52 +22,78 @@ export const fetch = async () => {
     return data.status === 200 ? data.data : [];
   } catch (e) {
     console.log(e.message);
-    return [];
   }
+};
+export const Loader = () => {
+  return (
+    <div className="flex items-center justify-center gap-2 min-h-screen bg-black">
+      <div className="h-3 w-3 rounded-full bg-white animate-bounce"></div>
+      <div
+        className="h-3 w-3 rounded-full bg-white animate-bounce"
+        style={{ animationDelay: "0.15s" }}
+      ></div>
+      <div
+        className="h-3 w-3 rounded-full bg-white animate-bounce"
+        style={{ animationDelay: "0.3s" }}
+      ></div>
+    </div>
+  );
+};
+export const ErrorComponent = ({ message="Something went wrong !" ,refetch}) => {
+  return (
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="bg-zinc-900 border border-red-500/20 rounded-2xl p-6 max-w-md w-full text-center">
+        <div className="text-red-400 text-5xl mb-4">⚠️</div>
+
+        <h2 className="text-white text-xl font-semibold mb-2">Oops!</h2>
+
+        <p className="text-zinc-400">{message}</p>
+
+        <button
+          onClick={()=>{refetch()}}
+          className="mt-5 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg border border-red-500/20 hover:bg-red-500/20 transition"
+        >
+          Try Again
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Card;
 export function JsonPlaceHolder() {
-//   const [posts, setPosts] = useState([]);
-// //   const [posts1, setPosts1] = useState([]);
-//   useEffect(() => {
-//     const fetch = async () => {
-//       try {                                                                 old method
-//         const data = await axios.get(
-//           "https://jsonplaceholder.typicode.com/posts/",
-//         );
-//         data.status === 200 ? setPosts(data.data) : [];
-//       } catch (e) {
-//         console.log(e.message);
-//       }
-//     };
-//     fetch();
-    //   }, []);
-    const { data } = useQuery({ queryKey: ['posts'], queryFn:()=>fetch() });
-    // console.log(data)
-
-
+  //   const [posts, setPosts] = useState([]);
+  // //   const [posts1, setPosts1] = useState([]);
+  //   useEffect(() => {
+  //     const fetch = async () => {
+  //       try {                                                                 old method
+  //         const data = await axios.get(
+  //           "https://jsonplaceholder.typicode.com/posts/",
+  //         );
+  //         data.status === 200 ? setPosts(data.data) : [];
+  //       } catch (e) {
+  //         console.log(e.message);
+  //       }
+  //     };
+  //     fetch();
+  //   }, []);
+  const { data, isLoading, isError, error,refetch } = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => fetch(), retry: false,
+    gcTime: 10000, staleTime: 10000
+    // refetchInterval: 1000,
+  });
   return (
-    <ResizablePanelGroup
-      orientation="horizontal"
-      className="min-h-[200px] max-w-7xl m-auto rounded-lg border md:min-w-[450px] "
-    >
-      <ResizablePanel defaultSize="25%">
-        <div className="flex items-center justify-center p-6">
-          <div className=" bg-black p-8">
-            <div className="grid grid-row-1 md:grid-row lg:grid-row gap-6 h-145 overflow-y-auto">
-              {data?.map((post) => (
-                <Card key={post.id} post={post} />
-              ))}
-            </div>
-          </div>{" "}
+    <>
+      <div className=" bg-black p-8">
+        <div className="grid grid-row-1 md:grid-row lg:grid-row gap-6 h-145 overflow-y-auto">
+          {isLoading ? (
+            <Loader />
+          ) : (
+           (isError)?<ErrorComponent message={error.message} refetch={refetch} />: data?.map((post) => <Card key={post.id} post={post} />)
+          )}
         </div>
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel defaultSize="75%">
-        <div className="flex h-full items-center justify-center p-6">
-        </div>
-      </ResizablePanel>
-    </ResizablePanelGroup>
+      </div>{" "}
+    </>
   );
 }
