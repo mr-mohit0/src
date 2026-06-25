@@ -11,6 +11,8 @@ import Team from "./assets/Team";
 import Company from "./assets/Company";
 import { JsonPlaceHolder } from "./assets/JsonPlaceHolder";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PaggingGallary from "./assets/PaggingGallary";
+import {Imagedets}from "./assets/Imagedets"
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ const App = () => {
             <Route path="/Projects" element={<ProjectsSection />} />
             <Route path={`/Projects/:id`} element={<DynamicRout_projects />} />
             <Route path={"/posts"} element={<JsonPlaceHolder />} />
+            <Route path={"/gallary/"} element={<PaggingGallary/>} />
+            <Route path={'/gallary/:id'} element={<Imagedets/>} />
           </Routes>
         </div>
       </QueryClientProvider>

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { AnimatedPage } from "./Team";
 import axios from "axios";
 // import { useEffect, useState } from "react";
 const Card = ({ post }) => {
@@ -15,9 +16,9 @@ const Card = ({ post }) => {
     </div>
   );
 };
-export const fetch = async () => {
+export const fetchs = async (api) => {
   try {
-    const data = await axios.get("https://jsonplaceholder.typicode.com/posts");
+    const data = await axios.get(api);
     // console.log(data);
     return data.status === 200 ? data.data : [];
   } catch (e) {
@@ -39,7 +40,10 @@ export const Loader = () => {
     </div>
   );
 };
-export const ErrorComponent = ({ message="Something went wrong !" ,refetch}) => {
+export const ErrorComponent = ({
+  message = "Something went wrong !",
+  refetch,
+}) => {
   return (
     <div className="flex items-center justify-center min-h-[400px]">
       <div className="bg-zinc-900 border border-red-500/20 rounded-2xl p-6 max-w-md w-full text-center">
@@ -50,7 +54,9 @@ export const ErrorComponent = ({ message="Something went wrong !" ,refetch}) => 
         <p className="text-zinc-400">{message}</p>
 
         <button
-          onClick={()=>{refetch()}}
+          onClick={() => {
+            refetch();
+          }}
           className="mt-5 px-4 py-2 bg-red-500/10 text-red-400 rounded-lg border border-red-500/20 hover:bg-red-500/20 transition"
         >
           Try Again
@@ -77,23 +83,30 @@ export function JsonPlaceHolder() {
   //     };
   //     fetch();
   //   }, []);
-  const { data, isLoading, isError, error,refetch } = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["posts"],
-    queryFn: () => fetch(), retry: false,
-    gcTime: 10000, staleTime: 10000
+    queryFn: () => fetchs("https://jsonplaceholder.typicode.com/posts"),
+    retry: false,
+    gcTime: 10000,
+    staleTime: 10000,
     // refetchInterval: 1000,
+    //  refetchOnWindowFocus: false,
   });
   return (
     <>
-      <div className=" bg-black p-8">
-        <div className="grid grid-row-1 md:grid-row lg:grid-row gap-6 h-145 overflow-y-auto">
-          {isLoading ? (
-            <Loader />
-          ) : (
-           (isError)?<ErrorComponent message={error.message} refetch={refetch} />: data?.map((post) => <Card key={post.id} post={post} />)
-          )}
-        </div>
-      </div>{" "}
+      <AnimatedPage>
+        <div className=" bg-black p-8 scroll-smooth overflow-y-auto scrollbar-thumb-amber-950 ">
+          <div className="grid grid-row-1 md:grid-row lg:grid-row gap-6 h-145  ">
+            {isLoading ? (
+              <Loader />
+            ) : isError ? (
+              <ErrorComponent message={error.message} refetch={refetch} />
+            ) : (
+              data?.map((post) => <Card key={post.id} post={post} />)
+            )}
+          </div>
+        </div>{" "}
+      </AnimatedPage>
     </>
   );
 }
