@@ -31,6 +31,17 @@ const stor = (set, get, api) => {
       increment();
       increment();
     },
+    imagePageState: 1,
+    increment1: () => {
+      set((state) => {
+        return { imagePageState: state.imagePageState + 1 };
+      });
+    },
+    decrement1: () => {
+      set((state) => {
+        return { imagePageState: state.imagePageState - 1 };
+      });
+    },
     themeToggle: true,
     themToggleFunc: (val) => {
       set((state) => {

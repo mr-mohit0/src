@@ -380,7 +380,7 @@ function InfoRow({ label, value }) {
 export const Imagedets = () => {
     const { id } = useParams();
   const { data,isLoading,error,refetch} = useQuery({ queryKey: ["indphoto",id], queryFn: () => a(id) });
-      setTimeout(()=>{console.log(data)},5000);
+      // setTimeout(()=>{console.log(data)},5000);
     if(isLoading)return <Loader/>
     if (error) return <ErrorComponent message={error.message} refetch={refetch} />
     return <>
