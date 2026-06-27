@@ -344,3 +344,32 @@ code {
     @apply font-sans;
     }
 }
+
+
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%);
+  }
+
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+.shimmer::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.18),
+    transparent
+  );
+
+  animation: shimmer 1.5s infinite;
+}

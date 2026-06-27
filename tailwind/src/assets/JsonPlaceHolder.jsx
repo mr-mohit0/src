@@ -23,6 +23,7 @@ export const fetchs = async (api) => {
     return data.status === 200 ? data.data : [];
   } catch (e) {
     console.log(e.message);
+    return [];
   }
 };
 export const Loader = () => {

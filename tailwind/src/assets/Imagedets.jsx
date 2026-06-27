@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Loader, ErrorComponent } from "./JsonPlaceHolder";
 import {
@@ -37,8 +37,8 @@ import {
 
 
 export default function ImageDetails({ photo }) {
+  const navigate = useNavigate();
   if (!photo) return null;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-black to-zinc-900 text-white">
 
@@ -46,14 +46,24 @@ export default function ImageDetails({ photo }) {
 
       <section className="max-w-7xl mx-auto px-6 py-10">
 
-        <div className="overflow-hidden rounded-3xl shadow-2xl border border-zinc-800">
+        <div className="overflow-hidden rounded-3xl shadow-2xl border border-zinc-800 relative">
 
           <img
             src={photo.urls.full}
             alt={photo.alt_description}
             className="w-full h-[75vh] object-cover"
           />
+<button
+onClick={()=> navigate(-1)}
+className="absolute top-4 left-4 rounded-md
+bg-green-500 text-white font-semibold
+px-4 py-2  shadow-1g
+hover:bg-green-600 active:scale-95
+transition-all z-20"
+>
 
+GO Back
+</button>
         </div>
 
         {/* Stats */}
