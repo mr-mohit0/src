@@ -75,7 +75,7 @@ const PaggingGallary = () => {
   const imagePageState = globalStorage((state) => state.imagePageState);
   const decrement1 = globalStorage((state) => state.decrement1);
   const increment1 = globalStorage((state) => state.increment1);
-  const { data, isPending, error, refetch, isFetching } = useQuery({
+  const { data, isPending,isError, error, refetch, isFetching } = useQuery({
     queryKey: ["photos", imagePageState],
     queryFn: () => {
       return fetchs(
@@ -85,7 +85,7 @@ const PaggingGallary = () => {
     placeholderData: keepPreviousData,
   });
   if (isPending) return <Loader />;
-  if (error) return <ErrorComponent refetch={refetch} />;
+  if (isError) return <ErrorComponent message={error.message} refetch={refetch} />;
   return (
     <>
       <div className="flex justify-center gap-3 py-8">
@@ -111,7 +111,7 @@ const PaggingGallary = () => {
       <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-black">
         <div className="mx-auto max-w-7xl p-6">
           <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-5 space-y-5">
-            {data.results.map((Image, index) => (
+            {data.results?.map((Image, index) => (
               <ImageCard key={Image.id} image={Image} index={index} />
             ))}
           </div>
