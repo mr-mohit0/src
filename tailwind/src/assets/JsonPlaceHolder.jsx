@@ -57,7 +57,7 @@ export const ErrorComponent = ({
   );
 };
 
-const Card = ({ post, deletemutate }) => {
+const Card = ({ post, deletemutate, updatePostsData }) => {
   return (
     <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-all duration-300 flex flex-col">
       <p className="text-zinc-400 text-sm">{post.id}</p>
@@ -67,15 +67,20 @@ const Card = ({ post, deletemutate }) => {
       </h2>
 
       <p className="text-zinc-400 text-sm line-clamp-3">{post.body}</p>
-      <div className="flex flex-col-2 gap-2 justify-between mt-auto pt-2">
+      <div className="flex flex-col-2 gap-2 justify-center mt-auto pt-2">
         <button
           onClick={() => deletemutate.mutate(post.id)}
-          className=" p-1 bg-white text-black transition-all duration-300 ease-in-out hover:bg-red-600 hover:text-white border rounded px-4 py-1.5 w-fit"
+          className=" p-1 bg-white text-black transition-all duration-500 ease-in-out hover:bg-red-600 hover:text-white border rounded px-4 py-1.5 w-fit"
         >
           Delete
         </button>
         <button
-          onClick={() => deletemutate.mutate(post.id)}
+          onClick={() =>
+            updatePostsData.mutate({
+              id: post.id,
+              title: "Updated Title",
+            })
+          }
           className=" p-1 bg-white text-black transition-all duration-300 ease-in-out hover:bg-red-600 hover:text-white border rounded px-4 py-1.5 w-fit"
         >
           Update
@@ -85,9 +90,15 @@ const Card = ({ post, deletemutate }) => {
   );
 };
 
-const deletepost = (id) => {
-  return axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+const deletepost = async (id) => {
+  return await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
 }; // this method is used to delete the posts on the server
+
+const updatepost = async (id, title) => {
+  return await axios.patch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    title,
+  });
+};
 export function JsonPlaceHolder() {
   //   const [posts, setPosts] = useState([]);
   // //   const [posts1, setPosts1] = useState([]);
@@ -104,8 +115,12 @@ export function JsonPlaceHolder() {
   //     };
   //     fetch();
   //   }, []);
+
   
-  const { data, isLoading, isError, error, refetch, } = useQuery({
+  
+  
+  
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: () => fetchs("https://jsonplaceholder.typicode.com/posts"),
     retry: false,
@@ -114,47 +129,104 @@ export function JsonPlaceHolder() {
     // refetchInterval: 1000,    this is for feching the dtata
     //  refetchOnWindowFocus: false,
   });
+
+
+
+
   const cachdata = useQueryClient();
   const deletemutate = useMutation({
     mutationFn: (id) => deletepost(id), /// this method deletes the data from the local cach of the browser
     mutationKey: ["posts"],
-    onMutate: async (data, idkey) => {
+
+
+    onMutate: async (id) => {
+      console.log(id);
       // 1. Ongoing refetch ko cancel karo
       await cachdata.cancelQueries({
         queryKey: ["posts"],
       });
 
+
       // 2. Purana cache save karo
       const previousPosts = cachdata.getQueryData(["posts"]);
 
-      cachdata.setQueriesData(["posts"], (elem) => {
+      cachdata.setQueryData(["posts"], (elem) => {
         return elem?.filter((post) => {
-          return post.id !== idkey;
+          return post.id !== id;
         });
       });
-        return { previousPosts };
+      return { previousPosts };
     },
-    onSuccess: async () => {console.log('Data Delete successfully!')},
-    onError: (err, id, context) => {
-    // API fail ho gayi to rollback
-      cachdata.setQueryData(
-        ["posts"],
-        context.previousPosts
-      
+
+
+    onSuccess: async () => {
+      console.log(
+        "Data Delete successfully! \n But note that => the json place holder is not our private server api so that we can  delete data , but when the data deleted then server make anoter get request to get fresh data and then we get fresh data again but note deleted values ",
       );
-      console.log('error from on errro componet ')
     },
+
+
+    onError: (err, id, context) => {
+      // API fail ho gayi to rollback
+      cachdata.setQueryData(["posts"], context.previousPosts);
+      console.log("error from on errro componet ");
+    },
+
+
     onSettled: () => {
-    cachdata.invalidateQueries({
-      queryKey: ["posts"],
-
-    });
-      console.log('catch data seteled')
-  },
-
+      cachdata.invalidateQueries({
+        queryKey: ["posts"],
+      });
+      console.log("catch data seteled");
+    },
   });
 
-  // console.log(error);
+
+
+
+
+  const updatePostsData = useMutation({
+    mutationFn: ({ id, title }) => updatepost(id, title),
+    mutationKey: ["posts"],
+
+
+    onMutate: async ({ id, title }) => {
+      await cachdata.cancelQueries({
+        queryKey: ["posts"],
+      });
+      const previousPosts = cachdata.getQueryData(["posts"]);
+      cachdata.setQueryData(["posts"], (old) =>
+        old?.map((post) =>
+          post.id === id
+            ? {
+                ...post,
+                title,
+              }
+            : post,
+        ),
+      );
+
+      return { previousPosts };
+    },
+
+
+    onSuccess: async () => {
+      console.log("updation succesfull !");
+    },
+
+
+    onError: (err, variables, context) => {
+      cachdata.setQueryData(["posts"], context.previousPosts);
+    },
+
+
+    onSettled: () => {
+      cachdata.invalidateQueries({
+        queryKey: ["posts"],
+      });
+    },
+  });
+
   return (
     <>
       <AnimatedPage>
@@ -167,12 +239,17 @@ export function JsonPlaceHolder() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
                 {data?.map((post) => (
-                  <Card key={post.id} post={post} deletemutate={deletemutate} />
+                  <Card
+                    key={post.id}
+                    post={post}
+                    deletemutate={deletemutate}
+                    updatePostsData={updatePostsData}
+                  />
                 ))}
               </div>
             )}
           </div>
-        </div>{" "}
+        </div>
       </AnimatedPage>
     </>
   );
